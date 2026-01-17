@@ -12,6 +12,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: ['.env.local', `.env.${process.env.NODE_ENV}`, '.env'],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

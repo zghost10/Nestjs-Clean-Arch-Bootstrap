@@ -15,6 +15,9 @@ This repository serves as a starting point (bootstrap) for projects that aim for
   - `Domain`: Enterprise business rules, Entities (pure TS, no dependencies).
   - `Application`: Use Cases, application-specific business rules.
   - `Infra`: Frameworks, drivers, database implementations (TypeORM, etc).
+- **High Performance**:
+  - **Fastify**: Utilizes Fastify instead of Express for improved throughput and lower latency.
+  - **SWC**: Configured with SWC builder for up to 20x faster compilation speeds.
 - **Package Management**: Built with **Yarn 4 (Berry)** using **Plug'n'Play (PnP)** for zero-install and faster CI/CD.
 - **Docker Support**: Ready-to-go `Dockerfile` and `docker-compose.yml` for containerized environments.
 - **Testing**: Jest configured for Unit and Integration tests.
@@ -52,9 +55,14 @@ This command generates/updates the `.vscode/settings.json` and `.yarn/sdks` to t
    ```
 
 2. **Environment Setup**:
-   Copy the example environment file:
+   The application supports multiple environment files with the following precedence:
+   1. `.env.local` (Local overrides, gitignored)
+   2. `.env.staging` / `.env.development` (Based on `NODE_ENV`)
+   3. `.env` (Base defaults)
+
+   Copy the example environment file to start:
    ```bash
-   cp .env.example .env
+   cp .env.example .env.local
    ```
 
 3. **Run Development Server**:
@@ -92,7 +100,8 @@ src/
 ├── domain/            # Entities, Domain Services (Pure TS, framework agnostic)
 └── infra/             # External Details
     ├── db/            # Database implementations (TypeORM, InMemory)
-    └── http/          # HTTP Framework (NestJS controllers, modules)
+    ├── http/          # HTTP Framework (NestJS controllers, modules)
+    └── main.ts        # Entry point (Fastify + SWC enabled)
 ```
 
 ---
