@@ -16,6 +16,7 @@ This repository serves as a starting point (bootstrap) for projects that aim for
   - `Application`: Use Cases, application-specific business rules.
   - `Infra`: Frameworks, drivers, database implementations (TypeORM, etc).
 - **Package Management**: Built with **Yarn 4 (Berry)** using **Plug'n'Play (PnP)** for zero-install and faster CI/CD.
+- **Docker Support**: Ready-to-go `Dockerfile` and `docker-compose.yml` for containerized environments.
 - **Testing**: Jest configured for Unit and Integration tests.
 
 ## 📦 Yarn PnP & IDE Support
@@ -43,28 +44,55 @@ This command generates/updates the `.vscode/settings.json` and `.yarn/sdks` to t
 
 ## 🛠️ Getting Started
 
+### Local Development
+
 1. **Install Dependencies** (if not versioning cache):
    ```bash
    yarn install
    ```
 
-2. **Run Development Server**:
+2. **Environment Setup**:
+   Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Run Development Server**:
    ```bash
    yarn start:dev
    ```
 
-3. **Run Tests**:
+4. **Run Tests**:
    ```bash
    yarn test
    ```
+
+### 🐳 Docker Support
+
+To run the complete environment (API + PostgreSQL) using Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+- **API URL**: [http://localhost:3000](http://localhost:3000)
+- **Database**: Port `5432`
+
+If you make changes to the code or dependencies, rebuild the container:
+
+```bash
+docker compose up -d --build
+```
 
 ## 📂 Project Structure
 
 ```
 src/
-├── application/       # Use Cases, Interfaces
-├── domain/            # Entities, Domain Services (Pure TS)
-└── infra/             # Controllers, Repositories (impl), External Services
+├── application/       # Use Cases, Interfaces, Application Business Rules
+├── domain/            # Entities, Domain Services (Pure TS, framework agnostic)
+└── infra/             # External Details
+    ├── db/            # Database implementations (TypeORM, InMemory)
+    └── http/          # HTTP Framework (NestJS controllers, modules)
 ```
 
 ---

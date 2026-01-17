@@ -14,11 +14,11 @@ export const CompanySchema = new EntitySchema({
       length: 255,
     },
     createdAt: {
-      type: 'datetime',
+      type: 'timestamp',
       default: () => 'CURRENT_TIMESTAMP',
     },
     updatedAt: {
-      type: 'datetime',
+      type: 'timestamp',
       default: () => 'CURRENT_TIMESTAMP',
       onUpdate: 'CURRENT_TIMESTAMP',
     },

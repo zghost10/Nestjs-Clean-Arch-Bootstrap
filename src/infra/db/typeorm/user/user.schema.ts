@@ -27,12 +27,12 @@ export const UserSchema = new EntitySchema<User>({
       nullable: true,
     },
     createdAt: {
-      type: 'datetime',
+      type: 'timestamp',
       default: () => 'CURRENT_TIMESTAMP',
       nullable: true,
     },
     updatedAt: {
-      type: 'datetime',
+      type: 'timestamp',
       default: () => 'CURRENT_TIMESTAMP',
       onUpdate: 'CURRENT_TIMESTAMP',
       nullable: true,
