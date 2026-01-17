@@ -1,11 +1,11 @@
 import { CreateUserUseCase } from "./create-user.use-case";
 import { UserInMemoryRepository } from "../infra/db/in-memory/user-in-memory.repository";
-import { Argon2Hasher } from "../infra/hasher/argon2";
+import { PasswordHasherInMemory } from "../infra/hasher/in-memory/password-hasher-in-memory";
 
 describe('CreateUserUseCase', () => {
   it('should create an user', async () => {
     const repository = new UserInMemoryRepository();
-    const hasher = new Argon2Hasher();
+    const hasher = new PasswordHasherInMemory();
     const useCase = new CreateUserUseCase(repository, hasher);
     const input = {
       name: 'John Doe',
@@ -19,6 +19,8 @@ describe('CreateUserUseCase', () => {
       name: input.name,
       email: input.email,
     });
-    expect(hasher.verify(repository.users[0].password, input.password)).resolves.toBe(true);
+
+    const expectedHash = 'password_hashed';
+    expect(repository.users[0].password).toBe(expectedHash);
   });
 });
