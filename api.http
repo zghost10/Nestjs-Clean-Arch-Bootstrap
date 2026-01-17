@@ -1,0 +1,12 @@
+### Get them all
+GET http://localhost:3000/users
+
+### Create
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "password"
+}
