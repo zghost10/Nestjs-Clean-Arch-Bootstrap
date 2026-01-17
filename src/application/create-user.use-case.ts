@@ -1,13 +1,19 @@
+import { IPasswordHasher } from "src/domain/password-hasher";
 import { User } from "src/domain/user.entity";
 import { IUserRepository } from "src/domain/user.respository";
 
 export class CreateUserUseCase {
   constructor(
-    private readonly userRepository: IUserRepository
+    private readonly userRepository: IUserRepository,
+    private readonly passwordHasher: IPasswordHasher
   ) { }
 
   async execute(userInput: UserInput): Promise<UserOutput> {
-    const user = User.create(userInput);
+    const props = {
+      ...userInput,
+      password: await this.passwordHasher.hash(userInput.password)
+    }
+    const user = User.create(props);
     await this.userRepository.insert(user);
     return user.toJSON();
   }

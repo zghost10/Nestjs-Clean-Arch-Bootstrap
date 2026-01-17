@@ -7,6 +7,8 @@ import { ListAllUsersUseCase } from 'src/application/list-all-users.use-case';
 import { DataSource } from 'typeorm';
 import { User } from 'src/domain/user.entity';
 import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm';
+import { IPasswordHasher } from 'src/domain/password-hasher';
+import { Argon2Hasher } from 'src/infra/hasher/argon2';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -19,11 +21,15 @@ import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm';
       inject: [getDataSourceToken()]
     },
     {
+      provide: Argon2Hasher,
+      useClass: Argon2Hasher
+    },
+    {
       provide: CreateUserUseCase,
-      useFactory: (userRepository: IUserRepository) => {
-        return new CreateUserUseCase(userRepository);
+      useFactory: (userRepository: IUserRepository, passwordHasher: IPasswordHasher) => {
+        return new CreateUserUseCase(userRepository, passwordHasher);
       },
-      inject: [UserTypeOrmRepository]
+      inject: [UserTypeOrmRepository, Argon2Hasher]
     },
     {
       provide: ListAllUsersUseCase,
