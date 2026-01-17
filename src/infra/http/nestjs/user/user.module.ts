@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
-import { CreateUserUseCase } from 'src/application/create-user.use-case';
-import { IUserRepository } from 'src/domain/user.respository';
-import { UserTypeOrmRepository } from 'src/infra/db/typeorm/user-typeorm.repository';
-import { ListAllUsersUseCase } from 'src/application/list-all-users.use-case';
+import { CreateUserUseCase } from '@application/user/create-user.use-case';
+import { IUserRepository } from '@domain/user/user.respository';
+import { UserTypeOrmRepository } from '@infra/db/typeorm/user/user-typeorm.repository';
+import { ListAllUsersUseCase } from '@application/user/list-all-users.use-case';
 import { DataSource } from 'typeorm';
-import { User } from 'src/domain/user.entity';
+import { User } from '@domain/user/user.entity';
 import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm';
-import { IPasswordHasher } from 'src/domain/password-hasher';
-import { Argon2Hasher } from 'src/infra/hasher/argon2';
+import { IPasswordHasher } from '@domain/password-hasher';
+import { Argon2Hasher } from '@infra/hasher/argon2';
+import { GetUserUseCase } from '@application/user/get-user.user-case';
+import { AddUserToCompanyUseCase } from '@application/user/add-user-to-company';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
@@ -35,6 +37,20 @@ import { Argon2Hasher } from 'src/infra/hasher/argon2';
       provide: ListAllUsersUseCase,
       useFactory: (userRepository: IUserRepository) => {
         return new ListAllUsersUseCase(userRepository);
+      },
+      inject: [UserTypeOrmRepository]
+    },
+    {
+      provide: GetUserUseCase,
+      useFactory: (userRepository: IUserRepository) => {
+        return new GetUserUseCase(userRepository);
+      },
+      inject: [UserTypeOrmRepository]
+    },
+    {
+      provide: AddUserToCompanyUseCase,
+      useFactory: (userRepository: IUserRepository) => {
+        return new AddUserToCompanyUseCase(userRepository);
       },
       inject: [UserTypeOrmRepository]
     }

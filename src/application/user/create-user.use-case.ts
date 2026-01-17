@@ -1,6 +1,6 @@
-import { IPasswordHasher } from "src/domain/password-hasher";
-import { User } from "src/domain/user.entity";
-import { IUserRepository } from "src/domain/user.respository";
+import { IPasswordHasher } from "@domain/password-hasher";
+import { User } from "@domain/user/user.entity";
+import { IUserRepository } from "@domain/user/user.respository";
 
 export class CreateUserUseCase {
   constructor(
@@ -29,4 +29,5 @@ type UserOutput = {
   id: string;
   name: string;
   email: string;
+  companyId: string | null;
 }

@@ -1,0 +1,14 @@
+### get all companies
+GET http://localhost:3000/companies
+
+
+### get company by id
+GET http://localhost:3000/companies/019bcc93-745a-7d03-89f5-3c6aac5f57bb
+
+### create company
+POST http://localhost:3000/companies
+Content-Type: application/json
+
+{
+    "name": "Company 1"
+}

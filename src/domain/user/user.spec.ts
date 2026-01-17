@@ -15,6 +15,8 @@ describe('User Entity', () => {
     expect(user.name).toBe(props.name);
     expect(user.email).toBe(props.email);
     expect(user.password).toBe(props.password);
+    expect(user.createdAt).toBeDefined();
+    expect(user.updatedAt).toBeDefined();
   });
 
   it('should create a user with provided ID', () => {
@@ -34,6 +36,8 @@ describe('User Entity', () => {
     expect(user.name).toBe('Jane Doe');
     expect(user.email).toBe('jane@example.com');
     expect(user.password).toBe('newpass');
+    expect(user.createdAt).toBeDefined();
+    expect(user.updatedAt).toBeDefined();
   });
 
   it('should convert to JSON correctly', () => {
@@ -43,6 +47,9 @@ describe('User Entity', () => {
       id: user.id,
       name: props.name,
       email: props.email,
+      companyId: null,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     });
   });
 });

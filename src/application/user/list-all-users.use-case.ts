@@ -1,4 +1,4 @@
-import { IUserRepository } from "src/domain/user.respository";
+import { IUserRepository } from "@domain/user/user.respository";
 
 export class ListAllUsersUseCase {
   constructor(
@@ -7,6 +7,7 @@ export class ListAllUsersUseCase {
 
   async execute(): Promise<ListOutput[]> {
     const users = await this.userRepository.findAll()
+    console.log(users)
     return users.map(user => user.toJSON())
   }
 }
@@ -15,4 +16,5 @@ type ListOutput = {
   id: string;
   name: string;
   email: string;
+  companyId: string | null;
 }

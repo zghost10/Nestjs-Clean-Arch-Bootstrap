@@ -1,6 +1,6 @@
 import { CreateUserUseCase } from "./create-user.use-case";
-import { UserInMemoryRepository } from "../infra/db/in-memory/user-in-memory.repository";
-import { PasswordHasherInMemory } from "../infra/hasher/in-memory/password-hasher-in-memory";
+import { UserInMemoryRepository } from "../../infra/db/in-memory/user-in-memory.repository";
+import { PasswordHasherInMemory } from "../../infra/hasher/in-memory/password-hasher-in-memory";
 
 describe('CreateUserUseCase', () => {
   it('should create an user', async () => {
@@ -18,6 +18,9 @@ describe('CreateUserUseCase', () => {
       id: repository.users[0].id,
       name: input.name,
       email: input.email,
+      companyId: null,
+      createdAt: repository.users[0].createdAt,
+      updatedAt: repository.users[0].updatedAt,
     });
 
     const expectedHash = 'password_hashed';

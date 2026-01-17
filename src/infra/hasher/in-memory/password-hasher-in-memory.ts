@@ -1,4 +1,4 @@
-import { IPasswordHasher } from "src/domain/password-hasher";
+import { IPasswordHasher } from "@domain/password-hasher";
 
 export class PasswordHasherInMemory implements IPasswordHasher {
   async hash(password: string): Promise<string> {

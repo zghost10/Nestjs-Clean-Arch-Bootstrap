@@ -1,4 +1,4 @@
-import { IPasswordHasher } from "src/domain/password-hasher";
+import { IPasswordHasher } from "@domain/password-hasher";
 import argon2 from 'argon2';
 
 export class Argon2Hasher implements IPasswordHasher {
